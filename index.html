@@ -92,7 +92,7 @@
         }
         console.log(totalQuestions)
 
-        for (let index = startingfrom.value*1; index < endwith.value*1; index++) {
+        for (let index = startingfrom.value*1; index <= endwith.value*1; index++) {
             console.log("Question number : " , index , " ", getPercentage(index))
             createCard(index);
             
