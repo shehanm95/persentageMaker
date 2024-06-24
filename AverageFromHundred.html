@@ -10,8 +10,9 @@
 <body>
     <h2 class="text-center p-1">Average From Hundred</h2>
 
-
-    <!-- =================================== Taking Components count ======================= -->
+    <!-- ======================================= Basic Setup -->
+    <div class="basicSetup">
+        <!-- =================================== Taking Components count ======================= -->
     <div class="container-sm mb-5">
         <div class="row">
             <label for="componentCount" class="form-label">How many components you have to work with</label>
@@ -23,12 +24,23 @@
     </div>
 
     <!-- ================================= Max Marks Component Holder ==================== -->
-    <div id="maxMarksComponentHolder" class="container-sm mb-5">
+    <div id="maxMarksComponentHolder" class="container-sm mb-5 d-none">
         <label class="form-label">Enter the maximum mark can get for each component.</label>
+        <p class="my-2 fw-medium">You are going to create a function Like this..</p>
+       <div class="card">
+        <p class="text-center text-primary" style="width: 98%; margin: auto;">
+            <br >
+            (2+3+4+5+6+7) = 89
+            <br>
+            (89/89) * 100 = 100;
+            <br><br>
             
+        </p>
+    </div>
+    <button class="btn btn-primary d-block my-3" style="width: 98%; margin: auto;">Proceed With This Function</button>
     </div>
 
-
+    <!-- ================================= Calculations ================================== -->
     <div class="container-fluid container-md">
 
         <div class="row">
@@ -39,6 +51,7 @@
           </div>
     </div>
 
+    </div>
     <div class="container-sm mt-5">
         <a href="index.html" class="mt-5 link-secondary">Percentage Maker</a>
     </div>
@@ -52,17 +65,80 @@
 </style>
 
 <script>
-    let componentCount = 0;
     let maxMarksComponentHolder = document.getElementById('maxMarksComponentHolder');
+    let markSetters = [];
+
+
     function generateComponentSMaxMarksSetter(){
+        maxMarksComponentHolder.classList.remove('d-none')
+        let btn = document.getElementById('start-entering-button');
+        
+        
+        if(btn != null) btn.remove();
         clearHolder('maxMarksComponentHolder' , 'markHolder')
-        let count = document.getElementById('componentCount').value *1;
-        for (let index = 0; index < count; index++) {
+        
+        
+        markSetters = [];
+        
+        let componentCount = document.getElementById('componentCount').value *1;
+        for (let index = 0; index < componentCount; index++) {
                 getMaxMarkSetter(index)
+                
         }
+
+        let startButton = document.createElement('button')
+        startButton.classList.add('btn' , 'btn-primary' , 'd-block',);
+        startButton.id = 'start-entering-button';
+        startButton.onclick = setMaxValues;
+        startButton.textContent= 'Start Entering';
+        maxMarksComponentHolder.appendChild(startButton);
     }
 
-    function clearHolder(holderNameString , childTypeString){
+    function setMaxValues() {
+        if(markSetters.length == document.getElementById('componentCount').value *1){
+            markSetters.some(markSetter =>{
+            if(markSetter.value*1 == ''){
+                alert("You should enter maximum mark that can take for each component....")
+                return true;
+                
+            }else if(markSetter.value*1 <= 0){
+                alert("Maximum Mark Should Grater than '0'")
+                return true;
+                
+            }
+            else{
+                console.log(markSetter.value)
+            }
+            console.log('lenfht of', markSetters.length);
+        })
+        }else{
+            let btn = document.getElementById('start-entering-button');
+            if(btn != null) btn.remove();
+            generateComponentSMaxMarksSetter();
+        }
+        
+    };
+
+   
+
+    function getMaxMarkSetter(index){
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.className = 'markHolder mb-1 form-control';
+    input.id = `markHolder${index}`;
+    input.placeholder = `Maximum marks can get for item ${index+1}.`;
+    markSetters.push(input)
+    maxMarksComponentHolder.appendChild(input);
+}
+
+
+
+
+
+
+// ============================utility ====================================
+
+function clearHolder(holderNameString , childTypeString){
         holder  = document.getElementById(holderNameString);
 
         let items = holder.getElementsByClassName(childTypeString);
@@ -72,20 +148,6 @@
             });
         }
     }
-
-    function getMaxMarkSetter(index){
-    
-    // Create the input element
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.className = 'markHolder mb-1 form-control';
-    input.id = `markHolder${index}`;
-    input.placeholder = `Maximum marks can get for item ${index+1}.`;
- 
-    maxMarksComponentHolder.appendChild(input);
-
-}
-
 
 </script>
 
