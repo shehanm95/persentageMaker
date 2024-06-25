@@ -56,6 +56,7 @@
 <script>
     let maxMarks = [];
     let totalMax = 0;
+    let totalGotMarks = 0;
 
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ AREA STEP 01 FUNCTION SETUP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -244,19 +245,21 @@
   //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ AREA STEP 02 CALCULATIONS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   
 {
-    let answerCard = null;
+    let answerCardFull = null;
     let calculationArea = document.getElementById('calculationArea');
-    doCalculations();
+    let answerFields = [];
+    let answerCardNextButton;
+    
     function doCalculations(){
         generateMarkFields();
-        generateAnswerCard();
         addEnterEventToMarkInputs();
        
     }
     
     function generateAnswerCard(){
-        if(answerCard == null){
-            const card = document.createElement('div');
+        if(answerCardFull == null){
+            answerCardFull = document.createElement('div');
+            card = document.createElement('div');
             card.classList.add('card','m-3');
             const paragraph = document.createElement('p');
             paragraph.className = 'text-center text-primary';
@@ -266,62 +269,66 @@
             // Set the innerHTML of the paragraph
             paragraph.innerHTML = `
                 <br>
-                {generateSumString()}
+                ${getMarksSumString()}
                 <br>
-                ({totalMax}/{totalMax}) * 100 = 100;
+                (${totalGotMarks}/${totalMax}) * 100 = ${Math.round((totalGotMarks/totalMax)*100)};
                 <br><br>
             `;
 
             const nextButton = document.createElement('button');
             nextButton.classList.add('btn' , 'btn-primary', 'mx-auto');
-            nextButton.style.width = '99%';
+            nextButton.style.width = '100%';
             nextButton.innerText = 'Next';
-
+            answerCardNextButton = nextButton;
+            nextButton.onclick = ()=>{
+                answerCardFull.remove();
+                answerCardFull = null;
+                answerFields[0].scrollIntoView({ behavior: 'smooth' });
+                [...answerFields].forEach((e)=>{
+                    e.value='';
+                })
+                totalGotMarks = 0;
+                answerFields[0].focus();
+            }
 
             card.appendChild(paragraph);
             
-            calculationArea.append(card );
-            calculationArea.append(nextButton);
+            answerCardFull.append(card );
+            answerCardFull.append(nextButton);
+            calculationArea.append(answerCardFull);
+            
         }
     }
     function generateMarkFields(){
         for (let index = 0; index < maxMarks.length; index++) {
-            getEmptyField();
-            
+            getEmptyField(index);
         }
     }
 
-    function getEmptyField(){
+    function getEmptyField(index){
         // Create the main row div
             const row = document.createElement('div');
             row.className = 'row';
 
             // Create the col-11 div
             const col11 = document.createElement('div');
-            col11.className = 'col-11 d-flex m-2';
+            col11.className = 'container d-flex m-2';
 
             // Create the input element
             const input = document.createElement('input');
             input.type = 'number';
             input.className = 'form-control mark';
-            input.placeholder = 'Starting from';
-
-            // Create the button element
-            const button = document.createElement('button');
-            button.className = 'btn btn-primary ms-1';
-            button.textContent = 'clear';
+            input.id = `mark${index}`
+            input.placeholder = `form ?/${maxMarks[index]}`;
 
             // Append the input and button to the col-11 div
             col11.appendChild(input);
-            col11.appendChild(button);
 
             // Append the col-11 div to the row div
             row.appendChild(col11);
-
+            answerFields.push(input);
             // Append the row div to the body or another container
             calculationArea.appendChild(row);
-            
-
     }
     
     function focusNextInput(event) {
@@ -332,6 +339,9 @@
                 const index = Array.prototype.indexOf.call(inputs, event.target);
                 if (index > -1 && index < inputs.length - 1) {
                     inputs[index + 1].focus();
+                }else{
+                    generateAnswerCard();
+                    answerCardNextButton.focus();
                 }
             }
         }
@@ -344,7 +354,16 @@
         });
     }
 
-
+    function getMarksSumString(){
+        let markSumString = '';
+        [...answerFields].forEach((e)=>{
+            let mark = e.value*1;
+            markSumString += `${mark} + `;
+            totalGotMarks +=mark;
+        })
+        markSumString = markSumString.substring(0,markSumString.length - 2) + `= ${totalGotMarks}` 
+        return markSumString
+    }
 
 }
 
