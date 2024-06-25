@@ -275,10 +275,8 @@
                 <br><br>
             `;
 
-            const nextButton = document.createElement('button');
-            nextButton.classList.add('btn' , 'btn-primary', 'mx-auto');
-            nextButton.style.width = '100%';
-            nextButton.innerText = 'Next';
+            const nextButton = document.createElement('input');
+            nextButton.classList.add('d-none');
             answerCardNextButton = nextButton;
             nextButton.onclick = ()=>{
                 answerCardFull.remove();
