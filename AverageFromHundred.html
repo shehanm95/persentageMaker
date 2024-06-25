@@ -250,6 +250,7 @@
     function doCalculations(){
         generateMarkFields();
         generateAnswerCard();
+        addEnterEventToMarkInputs();
        
     }
     
@@ -302,8 +303,7 @@
             // Create the input element
             const input = document.createElement('input');
             input.type = 'number';
-            input.className = 'form-control';
-            input.id = 'startingfrom';
+            input.className = 'form-control mark';
             input.placeholder = 'Starting from';
 
             // Create the button element
@@ -324,7 +324,30 @@
 
     }
     
+    function focusNextInput(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission if within a form
+                const inputs = document.querySelectorAll('.mark');
+                console.log(inputs)
+                const index = Array.prototype.indexOf.call(inputs, event.target);
+                if (index > -1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            }
+        }
+
+        // Add event listener to all input fields
+    function addEnterEventToMarkInputs(){
+        const inputs =  document.querySelectorAll('.mark');
+        inputs.forEach(input => {
+            input.addEventListener('keydown', focusNextInput);
+        });
+    }
+
+
+
 }
+
 
 
 // ################# UTILS ####################//
