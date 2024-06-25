@@ -276,10 +276,11 @@
             `;
 
             const finalHiddenField = document.createElement('input');
-            finalHiddenField.classList.add('d-none');
-            finalHiddenField.type = 'number'
+            finalHiddenField.classList.add('col-12');
+            finalHiddenField.type = 'number';
+            finalHiddenField.style.opacity = '0';
             HiddenFieldToNext = finalHiddenField;
-            finalHiddenField.onclick = ()=>{
+            finalHiddenField.addEventListener('keydown', ()=>{
                 answerCardFull.remove();
                 answerCardFull = null;
                 answerFields[0].scrollIntoView({ behavior: 'smooth' });
@@ -288,7 +289,7 @@
                 })
                 totalGotMarks = 0;
                 answerFields[0].focus();
-            }
+            })
 
             card.appendChild(paragraph);
             
