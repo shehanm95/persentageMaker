@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body class="bg-dark">
     <h2 class="text-center p-1">2 Digits X Hundred</h2>
 
     <!-- ================================= Basic Setup  =================================-->
@@ -20,7 +20,8 @@
             <div class="row">
                 <label for="componentCount" class="form-label">How many components you have to work with</label>
                 <div class="col-11 d-flex">
-                    <input type="number" class="form-control" id="componentCount" placeholder="Add The Component Count">
+                    <input type="number" class="form-control bg-dark text-light" id="componentCount"
+                        placeholder="Add The Component Count">
                     <button onclick="getMarkInputs()" class="ms-2 btn btn-primary ms-1 w200">Set</button>
                 </div>
             </div>
@@ -28,7 +29,7 @@
 
 
         <div id="calculationArea" class="calculationArea d-none">
-            <div id="answer" class="answer h2 text-primary text-center m-3 mb-5">- ANSWER WILL DISPLAY HERE -</div>
+            <div id="answer" class="answer h2 text-light text-center m-3 mb-5">- ANSWER WILL DISPLAY HERE -</div>
             <div class="holdersArea d-flex flex-column align-items-center justify-content-center" id="holdersArea">
 
             </div>
@@ -80,7 +81,7 @@
 
     function getPlaceHolder() {
         h = `<input onclick="clearField(event)" onkeyup="toNextField(event)" type="number" max="100"
-                    class="form-control markComponent w-75 my-2">`
+                    class="form-control markComponent w-75 my-2 bg-dark text-light">`
 
         holder = document.createElement('div')
         holder.innerHTML = h;
