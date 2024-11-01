@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 Digits 100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h2 class="text-center p-1">2 Digits X Hundred</h2>
+
+    <!-- ================================= Basic Setup  =================================-->
+    <div id="basicSetup">
+        <!-- =================================== Taking Components count ======================= -->
+        <div id="componentCountGetter" class="container-sm mb-5">
+            <div class="row">
+                <label for="componentCount" class="form-label">How many components you have to work with</label>
+                <div class="col-11 d-flex">
+                    <input type="number" class="form-control" id="componentCount" placeholder="Add The Component Count">
+                    <button onclick="getMarkInputs()" class="ms-2 btn btn-primary ms-1 w200">Set</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="calculationArea" class="calculationArea d-none">
+            <div id="answer" class="answer h2 text-primary text-center m-3 mb-5">- ANSWER WILL DISPLAY HERE -</div>
+            <div class="holdersArea d-flex flex-column align-items-center justify-content-center" id="holdersArea">
+
+            </div>
+
+        </div>
+        <div class="container m-5">
+            <a href="index.html">Home</a>
+        </div>
+
+</body>
+<style>
+    .w200 {
+        width: 100%;
+        max-width: 200px;
+    }
+</style>
+
+<script>
+    let componentCount = 0;
+    let answerTxt = document.getElementById("answer")
+    function getMarkInputs() {
+        componentCount = document.getElementById('componentCount').value * 1;
+        document.getElementById("componentCountGetter").remove();
+        document.getElementById("calculationArea").classList.remove("d-none")
+        displayHolders();
+    }
+    console.log();
+
+    let holdersArea = document.getElementById("holdersArea");
+    function displayHolders() {
+        for (let i = 0; i < componentCount; i++) {
+            getPlaceHolder();
+        }
+    }
+
+
+
+    function calCulateAnswer() {
+        let answer = 0
+        let placeHolders = document.querySelectorAll(".markComponent");
+        placeHolders.forEach(holder => {
+            answer += (holder.value * 1);
+            holder.value = "";
+        });
+        answerTxt.textContent = Math.round(answer / componentCount);
+        placeHolders[0].focus();
+
+    }
+
+    function getPlaceHolder() {
+        h = `<input onclick="clearField(event)" onkeyup="toNextField(event)" type="number" max="100"
+                    class="form-control markComponent w-75 my-2">`
+
+        holder = document.createElement('div')
+        holder.innerHTML = h;
+        holdersArea.innerHTML += h;
+
+    }
+
+    function clearField(event) {
+        event.target.value = "";
+        console.log("field cleared")
+    }
+
+    function toNextField(event) {
+        // Check if the value reaches the max (100) or any other condition you prefer
+        if (event.target.value * 1 != 10) {
+            if (event.target.value.length >= 2) {
+                // Find the next input field
+                let nextField = event.target.nextElementSibling;
+                // Move to the next field if it exists
+                if (nextField && nextField.tagName === "INPUT") {
+                    nextField.focus();
+                } else {
+                    calCulateAnswer();
+                }
+            }
+        }
+    }
+
+</script>
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</html>
