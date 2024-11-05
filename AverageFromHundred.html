@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Average From 100</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 </head>
+
 <body>
     <h2 class="text-center p-1">Average From Hundred</h2>
 
     <!-- ================================= Basic Setup  =================================-->
     <div id="basicSetup">
         <!-- =================================== Taking Components count ======================= -->
-    <div class="container-sm mb-5">
-        <div class="row">
-            <label for="componentCount" class="form-label">How many components you have to work with</label>
-            <div class="col-11 d-flex">
-              <input type="number" class="form-control" id="componentCount" placeholder="Add The Component Count">
-              <button onclick="generateComponentSMaxMarksSetter()" class="ms-2 btn btn-primary ms-1 w200">Set</button>
+        <div class="container-sm mb-5">
+            <div class="row">
+                <label for="componentCount" class="form-label">How many components you have to work with</label>
+                <div class="col-11 d-flex">
+                    <input type="number" class="form-control" id="componentCount" placeholder="Add The Component Count">
+                    <button onclick="generateComponentSMaxMarksSetter()"
+                        class="ms-2 btn btn-primary ms-1 w200">Set</button>
+                </div>
             </div>
-          </div>
-    </div>
+        </div>
 
-    <!-- ================================= Max Marks Component Holder ==================== -->
-    <div id="maxMarksComponentHolder" class="container-sm mb-5 d-none">
-        <label class="form-label">Enter the maximum mark can get for each component.</label>
-        
-    
-    </div>    
+        <!-- ================================= Max Marks Component Holder ==================== -->
+        <div id="maxMarksComponentHolder" class="container-sm mb-5 d-none">
+            <label class="form-label">Enter the maximum mark can get for each component.</label>
+
+
+        </div>
     </div>
 
     <!-- ================================= Calculations ================================== -->
@@ -39,15 +43,26 @@
 
     </div>
 
-<!-- ================================= FOOTER ================================== -->
-    
-    <div class="container-sm mt-5">
-        <a href="index.html" class="mt-5 link-secondary">Percentage Maker</a>
-    </div>
+    <!-- ================================= FOOTER ================================== -->
 
+    <!-- NAV BAR============================= -->
+    <div class="container">
+        <div class="container m-5">
+            <a href="index.html">From 100</a>
+        </div>
+        <div class="container m-5">
+            <a href="AverageFromHundred.html">Manual Next From 100</a>
+        </div>
+        <div class="container m-5">
+            <a href="twoDigits.html">Auto Next in 100</a>
+        </div>
+        <div class="container m-5">
+            <a href="towDigitFCEF.html">FCEF Type Auto Next in 100</a>
+        </div>
+    </div>
 </body>
 <style>
-    .w200{
+    .w200 {
         width: 100%;
         max-width: 200px;
     }
@@ -61,206 +76,98 @@
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ AREA STEP 01 FUNCTION SETUP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     {
-    let maxMarksComponentHolder = document.getElementById('maxMarksComponentHolder');
-    let markSetters = [];
-    let functionCardFullDiv = null;
-    
+        let maxMarksComponentHolder = document.getElementById('maxMarksComponentHolder');
+        let markSetters = [];
+        let functionCardFullDiv = null;
 
 
-    function generateComponentSMaxMarksSetter(){
-        maxMarksComponentHolder.classList.remove('d-none')
-        let btn = document.getElementById('start-entering-button');
-        
-        
-        if(btn != null) btn.remove();
-        clearHolder('maxMarksComponentHolder' , 'markHolder')
-        
-        
-        markSetters = [];
-        
-        let componentCount = document.getElementById('componentCount').value *1;
-        for (let index = 0; index < componentCount; index++) {
+
+        function generateComponentSMaxMarksSetter() {
+            maxMarksComponentHolder.classList.remove('d-none')
+            let btn = document.getElementById('start-entering-button');
+
+
+            if (btn != null) btn.remove();
+            clearHolder('maxMarksComponentHolder', 'markHolder')
+
+
+            markSetters = [];
+
+            let componentCount = document.getElementById('componentCount').value * 1;
+            for (let index = 0; index < componentCount; index++) {
                 getMaxMarkSetter(index)
-                
+
+            }
+
+            let startButton = document.createElement('button')
+            startButton.classList.add('btn', 'btn-primary', 'd-block', 'm-2');
+            startButton.id = 'start-entering-button';
+            startButton.onclick = setMaxValues;
+            startButton.textContent = 'Start Entering';
+            maxMarksComponentHolder.appendChild(startButton);
         }
 
-        let startButton = document.createElement('button')
-        startButton.classList.add('btn' , 'btn-primary' , 'd-block', 'm-2');
-        startButton.id = 'start-entering-button';
-        startButton.onclick = setMaxValues;
-        startButton.textContent= 'Start Entering';
-        maxMarksComponentHolder.appendChild(startButton);
-    }
+        /*start entering function*/
+        function setMaxValues() {
+            if (markSetters.length == document.getElementById('componentCount').value * 1) {
 
-    /*start entering function*/
-    function setMaxValues() {
-        if(markSetters.length == document.getElementById('componentCount').value *1){
-            
-            
-            markSetters.some(markSetter =>{
-                    if(markSetter.value*1 == ''){
+
+                markSetters.some(markSetter => {
+                    if (markSetter.value * 1 == '') {
                         alert("You should enter maximum mark that can take for each component....")
                         return true;
-                        
-                    }else if(markSetter.value*1 <= 0){
+
+                    } else if (markSetter.value * 1 <= 0) {
                         alert("Maximum Mark Should Grater than '0'")
                         return true;
-                        
+
                     }
-                    else{
+                    else {
                         console.log('lenfht of', markSetters.length);
                     }
                 })
 
-            //if max values don't have any errors proceed on creating function.
-            if(functionCardFullDiv == null)displayFunctionCard();
+                //if max values don't have any errors proceed on creating function.
+                if (functionCardFullDiv == null) displayFunctionCard();
 
-        }else{
-            let btn = document.getElementById('start-entering-button');
-            if(btn != null) btn.remove();
-            generateComponentSMaxMarksSetter();
+            } else {
+                let btn = document.getElementById('start-entering-button');
+                if (btn != null) btn.remove();
+                generateComponentSMaxMarksSetter();
+            }
+
+
+        };
+
+
+        /* to create one max value setter input field for one component*/
+        function getMaxMarkSetter(index) {
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'markHolder mb-1 form-control';
+            input.id = `markHolder${index}`;
+            input.placeholder = `Maximum marks can get for item ${index + 1}.`;
+            markSetters.push(input)
+            maxMarksComponentHolder.appendChild(input);
         }
-        
-        
-    };
 
-   
-    /* to create one max value setter input field for one component*/
-    function getMaxMarkSetter(index){
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.className = 'markHolder mb-1 form-control';
-        input.id = `markHolder${index}`;
-        input.placeholder = `Maximum marks can get for item ${index+1}.`;
-        markSetters.push(input)
-        maxMarksComponentHolder.appendChild(input);
-}
+        /* to display finally created function*/
+        function displayFunctionCard() {
+            disableTextFields();
+            // Create the main container div
+            functionCardFullDiv = document.createElement('div');
+            const functionCard = document.createElement('div');
+            const introP = document.createElement('h5');
+            introP.innerText = 'You are going to create a function Like this..';
+            introP.classList.add = ('my-2', 'fw-bold');
 
-    /* to display finally created function*/
-    function displayFunctionCard(){
-        disableTextFields();
-        // Create the main container div
-        functionCardFullDiv = document.createElement('div');
-        const functionCard = document.createElement('div');
-        const introP = document.createElement('h5');
-        introP.innerText = 'You are going to create a function Like this..';
-        introP.classList.add = ('my-2' ,'fw-bold');
+            functionCardFullDiv.id = 'functionCard';
 
-        functionCardFullDiv.id = 'functionCard';
+            // Create the card div
+            const card = document.createElement('div');
+            card.className = 'card';
 
-        // Create the card div
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        // Create the paragraph element
-        const paragraph = document.createElement('p');
-        paragraph.className = 'text-center text-primary';
-        paragraph.style.width = '98%';
-        paragraph.style.margin = 'auto';
-
-        // Set the innerHTML of the paragraph
-        paragraph.innerHTML = `
-            <br>
-            ${generateSumString()}
-            <br>
-            (${totalMax}/${totalMax}) * 100 = 100;
-            <br><br>
-        `;
-
-        // Append the paragraph to the card
-        card.appendChild(paragraph);
-
-        // Append the card to the main container
-        functionCard.appendChild(card);
-
-        // Create the row div
-        const row = document.createElement('div');
-        row.className = 'row';
-
-        // Create the first button
-        const button1 = document.createElement('button');
-        button1.className = 'btn btn-primary d-block my-3';
-        button1.style.width = '49%';
-        button1.style.margin = 'auto';
-        button1.textContent = 'Proceed With This Function';
-        button1.onclick = ()=>{
-            document.getElementById('basicSetup').remove();
-            doCalculations();
-        }
-        // Create the second button
-        const button2 = document.createElement('button');
-        button2.className = 'btn btn-primary d-block my-3';
-        button2.style.width = '49%';
-        button2.style.margin = 'auto';
-        button2.textContent = 'Edit Details';
-        button2.onclick = enableFieldsAndEdit;
-
-        // Append the buttons to the row
-        row.appendChild(button2);
-        row.appendChild(button1);
-
-        // Append the row to the main container
-        functionCard.appendChild(row);
-
-        // Append the main container to the body or another container
-        functionCardFullDiv.append(introP , functionCard)
-        maxMarksComponentHolder.appendChild(functionCardFullDiv);
-
-}
-
-    /*Generating sum string and setting total max value and max value list*/
-    function generateSumString(){
-        maxMarks = [];
-        totalMax =0;
-        let func = '';
-        
-        markSetters.forEach(field=>{
-            let mark = field.value*1;
-            func += mark + " + "
-            maxMarks.push(mark);
-            totalMax+=mark;
-        })
-        func = func.slice(0, -3)+ " = " + totalMax;
-
-        return func;
-    }
-
-
-    function disableTextFields(){
-        document.getElementById('componentCount').disabled = true;
-        [...document.getElementsByClassName('markHolder')].forEach( element =>{
-            element.disabled = true;
-        })
-    }
-    function enableFieldsAndEdit(){
-        document.getElementById('componentCount').disabled = false;
-        [...document.getElementsByClassName('markHolder')].forEach( element =>{
-            element.disabled = false;
-        })
-        document.getElementById('functionCard').remove();
-        functionCardFullDiv = null;
-    }
-}
-
-  //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ AREA STEP 02 CALCULATIONS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  
-{
-    let answerCardFull = null;
-    let calculationArea = document.getElementById('calculationArea');
-    let answerFields = [];
-    let HiddenFieldToNext;
-    
-    function doCalculations(){
-        generateMarkFields();
-        addEnterEventToMarkInputs();
-       
-    }
-    
-    function generateAnswerCard(){
-        if(answerCardFull == null){
-            answerCardFull = document.createElement('div');
-            card = document.createElement('div');
-            card.classList.add('card','m-3');
+            // Create the paragraph element
             const paragraph = document.createElement('p');
             paragraph.className = 'text-center text-primary';
             paragraph.style.width = '98%';
@@ -268,45 +175,153 @@
 
             // Set the innerHTML of the paragraph
             paragraph.innerHTML = `
+            <br>
+            ${generateSumString()}
+            <br>
+            (${totalMax}/${totalMax}) * 100 = 100;
+            <br><br>
+        `;
+
+            // Append the paragraph to the card
+            card.appendChild(paragraph);
+
+            // Append the card to the main container
+            functionCard.appendChild(card);
+
+            // Create the row div
+            const row = document.createElement('div');
+            row.className = 'row';
+
+            // Create the first button
+            const button1 = document.createElement('button');
+            button1.className = 'btn btn-primary d-block my-3';
+            button1.style.width = '49%';
+            button1.style.margin = 'auto';
+            button1.textContent = 'Proceed With This Function';
+            button1.onclick = () => {
+                document.getElementById('basicSetup').remove();
+                doCalculations();
+            }
+            // Create the second button
+            const button2 = document.createElement('button');
+            button2.className = 'btn btn-primary d-block my-3';
+            button2.style.width = '49%';
+            button2.style.margin = 'auto';
+            button2.textContent = 'Edit Details';
+            button2.onclick = enableFieldsAndEdit;
+
+            // Append the buttons to the row
+            row.appendChild(button2);
+            row.appendChild(button1);
+
+            // Append the row to the main container
+            functionCard.appendChild(row);
+
+            // Append the main container to the body or another container
+            functionCardFullDiv.append(introP, functionCard)
+            maxMarksComponentHolder.appendChild(functionCardFullDiv);
+
+        }
+
+        /*Generating sum string and setting total max value and max value list*/
+        function generateSumString() {
+            maxMarks = [];
+            totalMax = 0;
+            let func = '';
+
+            markSetters.forEach(field => {
+                let mark = field.value * 1;
+                func += mark + " + "
+                maxMarks.push(mark);
+                totalMax += mark;
+            })
+            func = func.slice(0, -3) + " = " + totalMax;
+
+            return func;
+        }
+
+
+        function disableTextFields() {
+            document.getElementById('componentCount').disabled = true;
+            [...document.getElementsByClassName('markHolder')].forEach(element => {
+                element.disabled = true;
+            })
+        }
+        function enableFieldsAndEdit() {
+            document.getElementById('componentCount').disabled = false;
+            [...document.getElementsByClassName('markHolder')].forEach(element => {
+                element.disabled = false;
+            })
+            document.getElementById('functionCard').remove();
+            functionCardFullDiv = null;
+        }
+    }
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ AREA STEP 02 CALCULATIONS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+    {
+        let answerCardFull = null;
+        let calculationArea = document.getElementById('calculationArea');
+        let answerFields = [];
+        let HiddenFieldToNext;
+
+        function doCalculations() {
+            generateMarkFields();
+            addEnterEventToMarkInputs();
+
+        }
+
+        function generateAnswerCard() {
+            if (answerCardFull == null) {
+                answerCardFull = document.createElement('div');
+                card = document.createElement('div');
+                card.classList.add('card', 'm-3');
+                const paragraph = document.createElement('p');
+                paragraph.className = 'text-center text-primary';
+                paragraph.style.width = '98%';
+                paragraph.style.margin = 'auto';
+
+                // Set the innerHTML of the paragraph
+                paragraph.innerHTML = `
                 <br>
                 ${getMarksSumString()}
                 <br>
-                (${totalGotMarks}/${totalMax}) * 100 = ${Math.round((totalGotMarks/totalMax)*100)};
+                (${totalGotMarks}/${totalMax}) * 100 = ${Math.round((totalGotMarks / totalMax) * 100)};
                 <br><br>
             `;
 
-            const finalHiddenField = document.createElement('input');
-            finalHiddenField.classList.add('col-12');
-            finalHiddenField.type = 'number';
-            finalHiddenField.style.opacity = '0';
-            HiddenFieldToNext = finalHiddenField;
-            finalHiddenField.addEventListener('keydown', ()=>{
-                answerCardFull.remove();
-                answerCardFull = null;
-                answerFields[0].scrollIntoView({ behavior: 'smooth' });
-                [...answerFields].forEach((e)=>{
-                    e.value='';
+                const finalHiddenField = document.createElement('input');
+                finalHiddenField.classList.add('col-12');
+                finalHiddenField.type = 'number';
+                finalHiddenField.style.opacity = '0';
+                HiddenFieldToNext = finalHiddenField;
+                finalHiddenField.addEventListener('keydown', () => {
+                    answerCardFull.remove();
+                    answerCardFull = null;
+                    answerFields[0].scrollIntoView({ behavior: 'smooth' });
+                    [...answerFields].forEach((e) => {
+                        e.value = '';
+                    })
+                    totalGotMarks = 0;
+                    answerFields[0].focus();
                 })
-                totalGotMarks = 0;
-                answerFields[0].focus();
-            })
 
-            card.appendChild(paragraph);
-            
-            answerCardFull.append(card );
-            answerCardFull.append(finalHiddenField);
-            calculationArea.append(answerCardFull);
-            
-        }
-    }
-    function generateMarkFields(){
-        for (let index = 0; index < maxMarks.length; index++) {
-            getEmptyField(index);
-        }
-    }
+                card.appendChild(paragraph);
 
-    function getEmptyField(index){
-        // Create the main row div
+                answerCardFull.append(card);
+                answerCardFull.append(finalHiddenField);
+                calculationArea.append(answerCardFull);
+
+            }
+        }
+        function generateMarkFields() {
+            for (let index = 0; index < maxMarks.length; index++) {
+                getEmptyField(index);
+            }
+        }
+
+        function getEmptyField(index) {
+            // Create the main row div
             const row = document.createElement('div');
             row.className = 'row';
 
@@ -329,9 +344,9 @@
             answerFields.push(input);
             // Append the row div to the body or another container
             calculationArea.appendChild(row);
-    }
-    
-    function focusNextInput(event) {
+        }
+
+        function focusNextInput(event) {
             if (event.key === "Enter") {
                 event.preventDefault(); // Prevent form submission if within a form
                 const inputs = document.querySelectorAll('.mark');
@@ -339,7 +354,7 @@
                 const index = Array.prototype.indexOf.call(inputs, event.target);
                 if (index > -1 && index < inputs.length - 1) {
                     inputs[index + 1].focus();
-                }else{
+                } else {
                     generateAnswerCard();
                     HiddenFieldToNext.focus();
                 }
@@ -347,34 +362,34 @@
         }
 
         // Add event listener to all input fields
-    function addEnterEventToMarkInputs(){
-        const inputs =  document.querySelectorAll('.mark');
-        inputs.forEach(input => {
-            input.addEventListener('keydown', focusNextInput);
-        });
+        function addEnterEventToMarkInputs() {
+            const inputs = document.querySelectorAll('.mark');
+            inputs.forEach(input => {
+                input.addEventListener('keydown', focusNextInput);
+            });
+        }
+
+        function getMarksSumString() {
+            let markSumString = '';
+            [...answerFields].forEach((e) => {
+                let mark = e.value * 1;
+                markSumString += `${mark} + `;
+                totalGotMarks += mark;
+            })
+            markSumString = markSumString.substring(0, markSumString.length - 2) + `= ${totalGotMarks}`
+            return markSumString
+        }
+
     }
 
-    function getMarksSumString(){
-        let markSumString = '';
-        [...answerFields].forEach((e)=>{
-            let mark = e.value*1;
-            markSumString += `${mark} + `;
-            totalGotMarks +=mark;
-        })
-        markSumString = markSumString.substring(0,markSumString.length - 2) + `= ${totalGotMarks}` 
-        return markSumString
-    }
-
-}
 
 
-
-// ################# UTILS ####################//
-function clearHolder(holderNameString , childTypeString){
-        holder  = document.getElementById(holderNameString);
+    // ################# UTILS ####################//
+    function clearHolder(holderNameString, childTypeString) {
+        holder = document.getElementById(holderNameString);
 
         let items = holder.getElementsByClassName(childTypeString);
-        if(items.length > 0){
+        if (items.length > 0) {
             [...items].forEach(item => {
                 item.remove();
             });
@@ -385,5 +400,7 @@ function clearHolder(holderNameString , childTypeString){
 
 
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </html>

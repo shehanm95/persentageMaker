@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-dark">
-    <h2 class="text-center text-light p-1">2 Digits X Hundred</h2>
+    <h2 class="text-center text-light p-1">2 Digits X FCEF Type</h2>
 
     <!-- ================================= Basic Setup  =================================-->
     <div id="basicSetup">
@@ -19,11 +19,19 @@
         <div id="componentCountGetter" class="container-sm mb-5">
             <div class="row">
                 <label for="componentCount" class="form-label">How many components you have to work with</label>
-                <div class="col-11 d-flex">
+                <div class=" d-flex">
                     <input type="number" class="form-control bg-dark text-light" id="componentCount"
                         placeholder="Add The Component Count">
-                    <button onclick="getMarkInputs()" class="ms-2 btn btn-primary ms-1 w200">Set</button>
                 </div>
+                <label for="maximumMark" class="form-label">Maximum marks can get for all</label>
+                <div class=" my-4 d-flex">
+                    <input type="number" class="form-control bg-dark text-light" id="maximumMark"
+                        placeholder="Maximum Value Can Get">
+                </div>
+
+                <button onclick="getMarkInputs()" class="m-4 btn btn-primary ms-1 w200">Set</button>
+
+
             </div>
         </div>
 
@@ -33,6 +41,7 @@
             <div class="holdersArea d-flex flex-column align-items-center justify-content-center" id="holdersArea">
 
             </div>
+
         </div>
         <!-- NAV BAR============================= -->
         <div class="container">
@@ -60,9 +69,12 @@
 
 <script>
     let componentCount = 0;
+    let maximumMark = 0
     let answerTxt = document.getElementById("answer")
     function getMarkInputs() {
         componentCount = document.getElementById('componentCount').value * 1;
+        maximumMark = document.getElementById('maximumMark').value * 1;
+
         document.getElementById("componentCountGetter").remove();
         document.getElementById("calculationArea").classList.remove("d-none")
         displayHolders();
@@ -85,7 +97,7 @@
             answer += (holder.value * 1);
             holder.value = "";
         });
-        answerTxt.textContent = Math.round(answer / componentCount);
+        answerTxt.textContent = Math.round((answer / maximumMark) * 100);
         placeHolders[0].focus();
 
     }
